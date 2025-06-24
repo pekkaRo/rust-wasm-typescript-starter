@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rust + WebAssembly + TypeScript</title>
+    <script type="module" crossorigin src="/rust-wasm-typescript-starter/assets/index-isaf4pxB.js"></script>
+    <link rel="stylesheet" crossorigin href="/rust-wasm-typescript-starter/assets/index-VEOCpqL3.css">
+  </head>
+  <body>
+    <div id="app">
+      <h1>🦀 Rust + WebAssembly + TypeScript</h1>
+      
+      <section class="demo-section">
+        <h2>Basic Math Operations</h2>
+        <div class="input-group">
+          <input type="number" id="num1" placeholder="First number" value="10">
+          <input type="number" id="num2" placeholder="Second number" value="5">
+          <button id="add-btn">Add (Rust)</button>
+          <button id="multiply-btn">Multiply (Rust)</button>
+          <div id="math-result"></div>
+        </div>
+      </section>
+
+      <section class="demo-section">
+        <h2>String Processing</h2>
+        <div class="input-group">
+          <input type="text" id="text-input" placeholder="Enter some text" value="Hello WebAssembly!">
+          <button id="reverse-btn">Reverse (Rust)</button>
+          <button id="count-words-btn">Count Words (Rust)</button>
+          <div id="string-result"></div>
+        </div>
+      </section>
+
+      <section class="demo-section">
+        <h2>Performance Demo</h2>
+        <div class="input-group">
+          <input type="number" id="fib-input" placeholder="Fibonacci number" value="30">
+          <button id="fib-btn">Calculate Fibonacci (Rust)</button>
+          <input type="number" id="prime-input" placeholder="Prime limit" value="1000">
+          <button id="prime-btn">Count Primes (Rust)</button>
+          <div id="performance-result"></div>
+        </div>
+      </section>
+
+      <section class="demo-section">
+        <h2>DOM Manipulation</h2>
+        <div class="input-group">
+          <input type="text" id="dom-text" placeholder="Text to set" value="Updated from Rust! 🦀">
+          <button id="dom-btn">Update Element from Rust</button>
+          <div id="rust-target">This text will be updated by Rust</div>
+        </div>
+      </section>
+
+      <section class="demo-section">
+        <h2>Console Output</h2>
+        <p>Open the browser console (F12) to see Rust debug messages!</p>
+      </section>
+    </div>
+  </body>
+</html>
