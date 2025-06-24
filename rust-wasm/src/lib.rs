@@ -54,11 +54,11 @@ pub fn fibonacci(n: u32) -> u32 {
 #[wasm_bindgen]
 pub fn prime_count(limit: u32) -> u32 {
     console_log!("Counting primes up to {} in Rust/WASM", limit);
-    
+
     if limit < 2 {
         return 0;
     }
-    
+
     let mut count = 0;
     for num in 2..=limit {
         if is_prime(num) {
@@ -78,7 +78,7 @@ fn is_prime(n: u32) -> bool {
     if n % 2 == 0 {
         return false;
     }
-    
+
     let sqrt_n = (n as f64).sqrt() as u32;
     for i in (3..=sqrt_n).step_by(2) {
         if n % i == 0 {
@@ -88,20 +88,59 @@ fn is_prime(n: u32) -> bool {
     true
 }
 
-// DOM manipulation example
+/// Sets the text content of a DOM element with the given ID.
+/// 
+/// This is a stub implementation for CI compatibility.
+/// In the browser, this would manipulate DOM elements.
 #[wasm_bindgen]
 pub fn set_text_content(id: &str, text: &str) -> Result<(), JsValue> {
-    let window = web_sys::window().unwrap();
-    let document = window.document().unwrap();
-    let element = document.get_element_by_id(id).unwrap();
+    console_log!("set_text_content called with id='{}', text='{}'", id, text);
     
-    console_log!("Setting text content of element '{}' to '{}'", id, text);
-    element.set_text_content(Some(text));
-    Ok(())
+    // Check if we're in a proper browser environment
+    if let Some(window) = web_sys::window() {
+        if let Some(document) = window.document() {
+            if let Some(element) = document.get_element_by_id(id) {
+                element.set_text_content(Some(text));
+                return Ok(());
+            }
+        }
+    }
+    
+    // If we reach here, we're not in a browser or element doesn't exist
+    Err(JsValue::from_str("Not in browser environment or element not found"))
 }
 
-// Called when the wasm module is instantiated
-#[wasm_bindgen(start)]
-pub fn main() {
-    console_log!("Rust/WebAssembly module loaded! 🦀✨");
+/// Safer version of set_text_content that returns a boolean
+#[wasm_bindgen]
+pub fn set_text_content_safe(id: &str, text: &str) -> bool {
+    match set_text_content(id, text) {
+        Ok(()) => {
+            console_log!("✅ Successfully set text content for element '{}'", id);
+            true
+        }
+        Err(_) => {
+            console_log!("❌ Failed to set text content for element '{}'", id);
+            false
+        }
+    }
 }
+
+/// Checks if a DOM element with the given ID exists
+#[wasm_bindgen]
+pub fn element_exists(id: &str) -> bool {
+    if let Some(window) = web_sys::window() {
+        if let Some(document) = window.document() {
+            return document.get_element_by_id(id).is_some();
+        }
+    }
+    false
+}
+
+// WASM module initialization (commented out to prevent build-time execution)
+// #[wasm_bindgen(start)]
+// pub fn main() {
+//     // Only run if we're in a browser environment
+//     if web_sys::window().is_some() {
+//         console_log!("Rust/WebAssembly module loaded! 🦀✨");
+//     }
+// }

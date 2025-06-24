@@ -6,7 +6,8 @@ import init, {
   count_words, 
   fibonacci, 
   prime_count, 
-  set_text_content 
+  set_text_content_safe,
+  element_exists
 } from '../pkg/rust_wasm.js'
 
 // Initialize the WASM module
@@ -115,10 +116,16 @@ function setupEventListeners() {
   const domBtn = document.getElementById('dom-btn') as HTMLButtonElement;
   domBtn.addEventListener('click', () => {
     const text = (document.getElementById('dom-text') as HTMLInputElement).value;
-    try {
-      set_text_content('rust-target', text);
-    } catch (error) {
-      console.error('DOM manipulation error:', error);
+    
+    // First check if the target element exists
+    if (element_exists('rust-target')) {
+      // Use the safer function that returns a boolean
+      const success = set_text_content_safe('rust-target', text);
+      if (!success) {
+        console.error('Failed to update element content');
+      }
+    } else {
+      console.error('Target element "rust-target" not found');
     }
   });
 }

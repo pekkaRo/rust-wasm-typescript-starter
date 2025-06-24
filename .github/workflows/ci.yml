@@ -31,19 +31,41 @@ jobs:
       run: npm ci
     
     - name: Check Rust formatting
-      run: cd rust-wasm && cargo fmt --check --verbose
+      run: |
+        cd rust-wasm
+        echo "Running cargo fmt --check..."
+        cargo fmt --check --verbose
+        echo "Rust formatting check completed successfully"
     
     - name: Run Rust clippy
-      run: cd rust-wasm && cargo clippy -- -D warnings
+      run: |
+        cd rust-wasm
+        echo "Running cargo clippy..."
+        cargo clippy -- -D warnings
+        echo "Rust clippy check completed successfully"
     
     - name: Build WebAssembly
-      run: cd rust-wasm && wasm-pack build --target web --out-dir ../pkg
+      run: |
+        cd rust-wasm
+        echo "Building WebAssembly with wasm-pack..."
+        wasm-pack build --target web --out-dir ../pkg
+        echo "WebAssembly build completed successfully"
+        echo "Generated files:"
+        ls -la ../pkg/
     
     - name: Build TypeScript
-      run: npm run build
+      run: |
+        echo "Checking if WASM files are available..."
+        ls -la pkg/
+        echo "Building TypeScript with Vite..."
+        npm run build
+        echo "TypeScript build completed successfully"
     
     - name: Check TypeScript types
-      run: npx tsc --noEmit
+      run: |
+        echo "Checking TypeScript types..."
+        npx tsc --noEmit
+        echo "TypeScript type check completed successfully"
 
   deploy:
     needs: test

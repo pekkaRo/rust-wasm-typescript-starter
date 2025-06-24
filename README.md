@@ -45,19 +45,31 @@ npm install -g wasm-pack
    npm install
    ```
 
-2. **Build the Rust/WASM module:**
+2. **Build the Rust/WASM module (REQUIRED first):**
    ```bash
-   cd rust-wasm
-   wasm-pack build --target web --out-dir ../pkg
-   cd ..
+   npm run build-wasm
    ```
 
 3. **Start development server:**
    ```bash
-   npm run dev
+   npm run dev:fast
    ```
 
-4. **Open your browser** and navigate to `http://localhost:5173`
+4. **Open your browser** and navigate to the displayed localhost URL
+
+### Development Workflow
+```bash
+# After changing Rust code
+npm run build-wasm
+
+# For daily development (auto-builds WASM)
+npm run dev
+
+# Quick start (if WASM already built)
+npm run dev:fast
+```
+
+⚠️ **Important**: Always run `npm run build-wasm` before your first `npm run dev` or after changing Rust code!
 
 ### Production Build
 ```bash
