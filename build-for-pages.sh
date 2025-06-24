@@ -2,6 +2,8 @@
 
 # Build script for GitHub Pages deployment
 
+set -e  # Exit on any error
+
 echo "🔨 Building for GitHub Pages..."
 
 # Step 1: Clean previous builds
@@ -12,26 +14,18 @@ rm -rf pkg/
 # Step 2: Build WebAssembly
 echo "📦 Building Rust WebAssembly module..."
 cd rust-wasm
-wasm-pack build --target web --out-dir ../pkg --release
+wasm-pack build --target web --out-dir ../pkg --release --dev
 cd ..
 
-if [ $? -ne 0 ]; then
-    echo "❌ WebAssembly build failed!"
-    exit 1
-fi
-
 echo "✅ WebAssembly build successful!"
-echo "📋 Generated files:"
+echo "📋 Generated WASM files:"
 ls -la pkg/
 
 # Step 3: Build the frontend
 echo "🏗️  Building frontend with TypeScript compilation..."
 npm run build
 
-if [ $? -ne 0 ]; then
-    echo "❌ Frontend build failed!"
-    exit 1
-fi
+echo "✅ Frontend build successful!"
 
 # Step 4: Create .nojekyll file for GitHub Pages
 echo "📄 Creating .nojekyll file..."
@@ -45,7 +39,19 @@ echo ""
 echo "Assets folder contents:"
 ls -la dist/assets/
 
-# Step 6: Check for essential files
+# Step 6: Check HTML file for proper compilation
+echo "🔍 Checking HTML file for TypeScript references..."
+if grep -q "main.ts" dist/index.html; then
+    echo "❌ ERROR: Found TypeScript reference in built HTML file!"
+    echo "This will cause MIME type errors on GitHub Pages."
+    echo "HTML content:"
+    cat dist/index.html
+    exit 1
+else
+    echo "✅ No TypeScript references found in built HTML - good!"
+fi
+
+# Step 7: Check for essential files
 if [ ! -f "dist/index.html" ]; then
     echo "❌ No index.html found in dist folder!"
     exit 1
@@ -53,6 +59,18 @@ fi
 
 if [ ! -d "dist/assets" ] || [ -z "$(ls -A dist/assets)" ]; then
     echo "❌ No assets found in dist/assets folder!"
+    exit 1
+fi
+
+# Step 8: Verify JavaScript bundle exists
+if ! ls dist/assets/index-*.js 1> /dev/null 2>&1; then
+    echo "❌ No JavaScript bundle found in assets!"
+    exit 1
+fi
+
+# Step 9: Verify WASM file exists
+if ! ls dist/assets/*wasm 1> /dev/null 2>&1; then
+    echo "❌ No WASM file found in assets!"
     exit 1
 fi
 
