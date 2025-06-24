@@ -1,0 +1,31 @@
+# Rustfmt configuration for consistent code formatting
+
+# Use verbose diff output
+verbose_diff = true
+
+# Format code in editions other than 2015
+edition = "2021"
+
+# Maximum width of the lines
+max_width = 100
+
+# Use hard tabs
+hard_tabs = false
+
+# Number of spaces per tab
+tab_spaces = 4
+
+# Use trailing commas
+trailing_comma = "Vertical"
+
+# Format string literals
+format_strings = true
+
+# Format macro bodies
+format_macro_bodies = true
+
+# Merge derives
+merge_derives = true
+
+# Use field init shorthand if possible
+use_field_init_shorthand = true
