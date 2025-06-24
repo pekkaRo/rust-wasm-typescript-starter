@@ -2,30 +2,34 @@
 
 # Local preview script for GitHub Pages build
 
+set -e
+
 echo "🌐 Testing GitHub Pages build locally..."
 
-# Check if dist folder exists
+# Ensure dist exists
 if [ ! -d "dist" ]; then
-    echo "❌ No dist folder found. Run 'npm run build-pages' first."
-    exit 1
+  echo "❌ No dist folder found. Run 'npm run build-pages' first."
+  exit 1
 fi
 
-# Start a simple HTTP server
-echo "🚀 Starting local server..."
-echo "📍 Testing URL: http://localhost:8080/rust-wasm-typescript-starter/"
-echo "🛑 Press Ctrl+C to stop"
-echo ""
+# Create a temp root with a subfolder matching project base
+ROOT_DIR=$(mktemp -d)
+PREFIX="rust-wasm-typescript-starter"
+echo "📂 Setting up preview directory: $ROOT_DIR/$PREFIX"
+mkdir -p "$ROOT_DIR/$PREFIX"
+cp -r dist/* "$ROOT_DIR/$PREFIX/"
 
-# Use Python's built-in server if available, otherwise suggest alternatives
+echo "🚀 Starting local server at http://localhost:8080/$PREFIX/"
+cd "$ROOT_DIR"
+
+# Start HTTP server
 if command -v python3 &> /dev/null; then
-    cd dist && python3 -m http.server 8080
+  python3 -m http.server 8080
 elif command -v python &> /dev/null; then
-    cd dist && python -m http.server 8080
+  python -m http.server 8080
 elif command -v npx &> /dev/null; then
-    npx serve dist -l 8080
+  npx serve "$ROOT_DIR" -l 8080
 else
-    echo "❌ No suitable HTTP server found."
-    echo "Please install Python or run: npm install -g serve"
-    echo "Then run: serve dist -l 8080"
-    exit 1
+  echo "❌ No suitable HTTP server found."
+  exit 1
 fi

@@ -1,7 +1,10 @@
 import { defineConfig } from 'vite'
 
-export default defineConfig({
-  base: './',
+export default defineConfig(({ command }) => ({
+  // serve (dev/preview) uses relative paths; build (GitHub Pages) uses repo subpath
+  base: command === 'build'
+    ? '/rust-wasm-typescript-starter/'
+    : './',
   server: {
     fs: {
       allow: ['..']
@@ -18,4 +21,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))
