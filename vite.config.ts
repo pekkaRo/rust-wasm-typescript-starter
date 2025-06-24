@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/rust-wasm-typescript-starter/',
+  base: './',
   server: {
     fs: {
       allow: ['..']

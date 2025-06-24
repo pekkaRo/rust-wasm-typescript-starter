@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // No base path for local development
+  base: './',
   server: {
     fs: {
       allow: ['..']
