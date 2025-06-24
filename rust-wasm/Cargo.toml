@@ -1,0 +1,25 @@
+[package]
+name = "rust-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "A Rust WebAssembly module demonstrating math operations, string processing, and DOM manipulation"
+license = "MIT"
+repository = "https://github.com/YOUR_USERNAME/wasm-starter"
+authors = ["Your Name <your.email@example.com>"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+js-sys = "0.3"
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  "console",
+  "Document",
+  "Element",
+  "HtmlElement",
+  "Window",
+]
