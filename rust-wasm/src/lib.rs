@@ -42,11 +42,18 @@ pub fn count_words(text: &str) -> usize {
 #[wasm_bindgen]
 pub fn fibonacci(n: u32) -> u32 {
     console_log!("Computing fibonacci({}) in Rust/WASM", n);
-    match n {
-        0 => 0,
-        1 => 1,
-        _ => fibonacci(n - 1) + fibonacci(n - 2),
+    // iterative approach for O(n) performance
+    if n == 0 {
+        return 0;
     }
+    let mut a = 0;
+    let mut b = 1;
+    for _ in 1..n {
+        let next = a + b;
+        a = b;
+        b = next;
+    }
+    b
 }
 
 // Performance-heavy computation example
