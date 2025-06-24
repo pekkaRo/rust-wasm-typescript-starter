@@ -20,16 +20,16 @@
     "performance",
     "wasm-bindgen"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "Pekka Röyttä <roytta@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/rust-wasm-typescript-starter.git"
+    "url": "https://github.com/pekkaro/rust-wasm-typescript-starter.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/rust-wasm-typescript-starter/issues"
+    "url": "https://github.com/pekkaro/rust-wasm-typescript-starter/issues"
   },
-  "homepage": "https://github.com/YOUR_USERNAME/rust-wasm-typescript-starter#readme",
+  "homepage": "https://github.com/pekkaro/rust-wasm-typescript-starter#readme",
   "devDependencies": {
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
