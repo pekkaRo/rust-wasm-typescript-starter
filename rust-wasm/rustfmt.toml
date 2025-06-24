@@ -1,7 +1,7 @@
 # Rustfmt configuration for consistent code formatting
 
 # Use verbose diff output
-verbose_diff = true
+#verbose_diff = true
 
 # Format code in editions other than 2015
 edition = "2021"
@@ -16,13 +16,13 @@ hard_tabs = false
 tab_spaces = 4
 
 # Use trailing commas
-trailing_comma = "Vertical"
+#cartrailing_comma = "Vertical"
 
 # Format string literals
-format_strings = true
+#format_strings = true
 
 # Format macro bodies
-format_macro_bodies = true
+#format_macro_bodies = true
 
 # Merge derives
 merge_derives = true

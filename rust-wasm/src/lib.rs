@@ -88,18 +88,18 @@ fn is_prime(n: u32) -> bool {
 }
 
 /// Sets the text content of a DOM element with the given ID.
-/// 
+///
 /// This function is designed to be CI-safe and will not cause build failures.
 /// In browser environments, it manipulates the DOM as expected.
 /// In CI/non-browser environments, it logs the attempt and returns Ok().
-/// 
+///
 /// # Arguments
 /// * `id` - The ID of the element to update
 /// * `text` - The text content to set
-/// 
+///
 /// # Returns
 /// * Always returns `Ok(())` to ensure CI compatibility
-/// 
+///
 /// # Example
 /// ```ignore
 /// // This is safe to call in any environment
@@ -108,7 +108,7 @@ fn is_prime(n: u32) -> bool {
 #[wasm_bindgen]
 pub fn set_text_content(id: &str, text: &str) -> Result<(), JsValue> {
     console_log!("set_text_content called with id='{}', text='{}'", id, text);
-    
+
     // Check if we're in a proper browser environment
     if let Some(window) = web_sys::window() {
         if let Some(document) = window.document() {
@@ -118,7 +118,7 @@ pub fn set_text_content(id: &str, text: &str) -> Result<(), JsValue> {
             }
         }
     }
-    
+
     // In CI/non-browser environments, just return Ok to avoid build failures
     // The caller can check if they're in a browser environment if needed
     console_log!("Note: set_text_content called in non-browser environment - returning Ok for CI compatibility");
@@ -126,19 +126,19 @@ pub fn set_text_content(id: &str, text: &str) -> Result<(), JsValue> {
 }
 
 /// Safer version of set_text_content that returns a boolean indicating success.
-/// 
+///
 /// This function never fails or returns errors - it returns true if the DOM
 /// operation was successful (in a browser environment), or false if not.
 /// It's the recommended function for most use cases.
-/// 
+///
 /// # Arguments
 /// * `id` - The ID of the element to update
 /// * `text` - The text content to set
-/// 
+///
 /// # Returns
 /// * `true` if the text was successfully set (browser environment + element exists)
 /// * `false` if not in browser environment or element doesn't exist
-/// 
+///
 /// # Example
 /// ```ignore
 /// if set_text_content_safe("my-element", "Hello!") {
@@ -149,8 +149,12 @@ pub fn set_text_content(id: &str, text: &str) -> Result<(), JsValue> {
 /// ```
 #[wasm_bindgen]
 pub fn set_text_content_safe(id: &str, text: &str) -> bool {
-    console_log!("set_text_content_safe called with id='{}', text='{}'", id, text);
-    
+    console_log!(
+        "set_text_content_safe called with id='{}', text='{}'",
+        id,
+        text
+    );
+
     // Check if we're in a proper browser environment
     if let Some(window) = web_sys::window() {
         if let Some(document) = window.document() {
@@ -161,24 +165,27 @@ pub fn set_text_content_safe(id: &str, text: &str) -> bool {
             }
         }
     }
-    
+
     // If we reach here, we're not in a browser or element doesn't exist
-    console_log!("❌ Failed to set text content for element '{}' (not in browser environment)", id);
+    console_log!(
+        "❌ Failed to set text content for element '{}' (not in browser environment)",
+        id
+    );
     false
 }
 
 /// Checks if a DOM element with the given ID exists.
-/// 
+///
 /// This function is safe to call in any environment and will return false
 /// if not in a browser environment.
-/// 
+///
 /// # Arguments
 /// * `id` - The ID of the element to check for
-/// 
+///
 /// # Returns
 /// * `true` if in browser environment and element exists
 /// * `false` if not in browser environment or element doesn't exist
-/// 
+///
 /// # Example
 /// ```ignore
 /// if element_exists("my-element") {
