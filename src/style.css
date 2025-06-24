@@ -60,24 +60,24 @@ h2 {
 }
 
 input {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #444;
+  border: 2px solid #666;
   border-radius: 6px;
   color: white;
   padding: 0.5rem;
   font-size: 1rem;
   min-width: 120px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+input::placeholder {
+  color: #aaa;
 }
 input:focus {
-  background: rgba(255, 255, 255, 0.2);
+  background: #444;
   border-color: #4ecdc4;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.3);
-}
-
-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(78,205,196,0.3);
 }
 
 button {
@@ -186,10 +186,25 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Light theme input overrides */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
+  }
+  input {
+    background: #fff;
+    border: 2px solid #ccc;
+    color: #213547;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  input::placeholder {
+    color: #888;
+  }
+  input:focus {
+    background: #fff;
+    border-color: #747bff;
+    box-shadow: 0 0 0 3px rgba(116,123,255,0.3);
   }
   a:hover {
     color: #747bff;
