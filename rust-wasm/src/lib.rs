@@ -1,5 +1,4 @@
 use wasm_bindgen::prelude::*;
-use web_sys::console;
 
 // Import the `console.log` function from the browser
 #[wasm_bindgen]
@@ -90,8 +89,22 @@ fn is_prime(n: u32) -> bool {
 
 /// Sets the text content of a DOM element with the given ID.
 /// 
-/// Returns Ok(()) if successful, or Err() if not in browser environment.
-/// This function is CI-safe and will not cause build failures.
+/// This function is designed to be CI-safe and will not cause build failures.
+/// In browser environments, it manipulates the DOM as expected.
+/// In CI/non-browser environments, it logs the attempt and returns Ok().
+/// 
+/// # Arguments
+/// * `id` - The ID of the element to update
+/// * `text` - The text content to set
+/// 
+/// # Returns
+/// * Always returns `Ok(())` to ensure CI compatibility
+/// 
+/// # Example
+/// ```ignore
+/// // This is safe to call in any environment
+/// set_text_content("my-element", "Hello from Rust!").unwrap();
+/// ```
 #[wasm_bindgen]
 pub fn set_text_content(id: &str, text: &str) -> Result<(), JsValue> {
     console_log!("set_text_content called with id='{}', text='{}'", id, text);
@@ -112,8 +125,28 @@ pub fn set_text_content(id: &str, text: &str) -> Result<(), JsValue> {
     Ok(())
 }
 
-/// Safer version of set_text_content that returns a boolean
-/// This function never fails or returns errors - it just returns true/false
+/// Safer version of set_text_content that returns a boolean indicating success.
+/// 
+/// This function never fails or returns errors - it returns true if the DOM
+/// operation was successful (in a browser environment), or false if not.
+/// It's the recommended function for most use cases.
+/// 
+/// # Arguments
+/// * `id` - The ID of the element to update
+/// * `text` - The text content to set
+/// 
+/// # Returns
+/// * `true` if the text was successfully set (browser environment + element exists)
+/// * `false` if not in browser environment or element doesn't exist
+/// 
+/// # Example
+/// ```ignore
+/// if set_text_content_safe("my-element", "Hello!") {
+///     console.log("Text updated successfully!");
+/// } else {
+///     console.log("Could not update text (not in browser or element missing)");
+/// }
+/// ```
 #[wasm_bindgen]
 pub fn set_text_content_safe(id: &str, text: &str) -> bool {
     console_log!("set_text_content_safe called with id='{}', text='{}'", id, text);
@@ -134,7 +167,24 @@ pub fn set_text_content_safe(id: &str, text: &str) -> bool {
     false
 }
 
-/// Checks if a DOM element with the given ID exists
+/// Checks if a DOM element with the given ID exists.
+/// 
+/// This function is safe to call in any environment and will return false
+/// if not in a browser environment.
+/// 
+/// # Arguments
+/// * `id` - The ID of the element to check for
+/// 
+/// # Returns
+/// * `true` if in browser environment and element exists
+/// * `false` if not in browser environment or element doesn't exist
+/// 
+/// # Example
+/// ```ignore
+/// if element_exists("my-element") {
+///     set_text_content_safe("my-element", "Element found!");
+/// }
+/// ```
 #[wasm_bindgen]
 pub fn element_exists(id: &str) -> bool {
     if let Some(window) = web_sys::window() {
