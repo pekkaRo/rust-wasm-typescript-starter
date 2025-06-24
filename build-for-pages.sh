@@ -14,7 +14,7 @@ rm -rf pkg/
 # Step 2: Build WebAssembly
 echo "📦 Building Rust WebAssembly module..."
 cd rust-wasm
-wasm-pack build --target web --out-dir ../pkg --release --dev
+wasm-pack build --target web --out-dir ../pkg --release
 cd ..
 
 echo "✅ WebAssembly build successful!"
