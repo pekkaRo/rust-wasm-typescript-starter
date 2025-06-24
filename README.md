@@ -64,6 +64,28 @@ npm install -g wasm-pack
 npm run build
 ```
 
+### GitHub Pages Deployment
+```bash
+# Build for GitHub Pages
+npm run build-pages
+
+# Test locally (optional)
+./preview-pages.sh
+
+# Then push to GitHub and enable Pages in repository settings
+```
+
+## 🌐 Live Demo
+
+After deploying to GitHub Pages, your project will be available at:
+**https://pekkaro.github.io/rust-wasm-typescript-starter/**
+
+### Setting up GitHub Pages
+1. Push your code to GitHub
+2. Go to repository **Settings** → **Pages**
+3. Source: **GitHub Actions**
+4. The site will be automatically deployed on every push to `main`
+
 ## 🎯 Learning Path
 
 This project is designed for progressive learning:

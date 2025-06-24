@@ -76,8 +76,11 @@ jobs:
     - name: Build WebAssembly
       run: cd rust-wasm && wasm-pack build --target web --out-dir ../pkg
     
-    - name: Build for production
+    - name: Build for GitHub Pages
       run: npm run build
+    
+    - name: Create .nojekyll file
+      run: touch dist/.nojekyll
     
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
