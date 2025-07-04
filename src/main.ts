@@ -62,7 +62,7 @@ function setupEventListeners() {
   reverseBtn.addEventListener('click', () => {
     const text = (document.getElementById('text-input') as HTMLInputElement).value;
     const reversed = reverse_string(text);
-    stringResult.innerHTML = `<strong>Reversed:</strong> "${text}" → "${reversed}"`;
+    stringResult.textContent = `Reversed: "${text}" → "${reversed}"`;
   });
 
   countWordsBtn.addEventListener('click', () => {
