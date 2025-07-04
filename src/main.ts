@@ -68,7 +68,9 @@ function setupEventListeners() {
   countWordsBtn.addEventListener('click', () => {
     const text = (document.getElementById('text-input') as HTMLInputElement).value;
     const wordCount = count_words(text);
-    stringResult.innerHTML = `<strong>Word Count:</strong> "${text}" contains ${wordCount} word(s)`;
+    stringResult.innerHTML = `<strong>Word Count:</strong> `;
+    const textNode = document.createTextNode(`"${text}" contains ${wordCount} word(s)`);
+    stringResult.appendChild(textNode);
   });
 
   // Performance operations
